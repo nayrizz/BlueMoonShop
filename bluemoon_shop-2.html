@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueMoon — Купить донат</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,Segoe UI,sans-serif;color:#fff}
+body{
+  background:
+    radial-gradient(circle at 20% 10%,rgba(0,132,255,.25),transparent 30%),
+    radial-gradient(circle at 80% 80%,rgba(0,190,255,.13),transparent 28%),
+    #030914;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,145,255,.035) 1px,transparent 1px),linear-gradient(rgba(0,145,255,.035) 1px,transparent 1px);background-size:45px 45px}
+.container{width:min(1050px,92%);margin:auto}
+.hero{text-align:center;padding:90px 20px 45px}
+.small{color:#58bcff;text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:800}
+h1{font-size:clamp(38px,7vw,68px);margin:15px 0 12px;background:linear-gradient(90deg,#fff,#48b9ff,#168cff);-webkit-background-clip:text;color:transparent}
+.subtitle{color:#91a8c5;font-size:17px}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;padding:20px 0 80px}
+.card{padding:28px;border:1px solid rgba(44,158,255,.23);border-radius:20px;background:linear-gradient(145deg,rgba(10,29,55,.94),rgba(5,15,29,.96));box-shadow:0 12px 40px rgba(0,0,0,.28);transition:.25s}
+.card:hover{transform:translateY(-6px);border-color:rgba(66,184,255,.7);box-shadow:0 15px 50px rgba(0,110,255,.15)}
+.card h2{margin:0 0 8px;font-size:27px}.price{font-size:26px;font-weight:800;color:#53bdff;margin-bottom:20px}
+.buy{width:100%;border:0;border-radius:11px;padding:13px;background:linear-gradient(135deg,#1498ff,#0065dc);color:white;font-size:15px;font-weight:800;cursor:pointer;transition:.2s}
+.buy:hover{filter:brightness(1.12);transform:scale(1.015)}
+footer{text-align:center;color:#637b99;padding:25px;border-top:1px solid rgba(50,150,255,.1)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,4,12,.78);backdrop-filter:blur(7px);z-index:20;padding:20px;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.window{width:min(570px,100%);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#0b1d36,#050d1b);border:1px solid rgba(61,174,255,.42);border-radius:20px;padding:28px;box-shadow:0 25px 80px #000}
+.close{float:right;background:transparent;border:0;color:#8ca6c2;font-size:28px;cursor:pointer}
+.window h2{font-size:32px;margin:0 40px 5px 0}.modal-price{color:#51baff;font-size:22px;font-weight:800;margin-bottom:20px}
+ul{padding-left:20px;color:#d5e5f5;line-height:1.65}li{margin:7px 0}
+.payment{margin-top:24px;padding:18px;border-radius:14px;background:rgba(16,104,180,.12);border:1px solid rgba(62,173,255,.22)}
+.payment b{color:#62c6ff}.tg{display:inline-block;margin-top:10px;color:white;text-decoration:none;background:#168cff;padding:10px 15px;border-radius:9px;font-weight:800}
+.note{font-size:12px;color:#7189a5;margin-top:14px}
+@media(max-width:650px){.cards{grid-template-columns:1fr}.hero{padding-top:60px}}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="small">BLUEMOON • SCP: SECRET LABORATORY</div>
+  <h1>Купить донат<br>на сервер BlueMoon</h1>
+  <div class="subtitle">Выберите донат, чтобы посмотреть привилегии и информацию об оплате.</div>
+</section>
+
+<main class="container">
+  <section class="cards">
+    <article class="card">
+      <h2>Базовый</h2><div class="price">250 ₽ / месяц</div>
+      <button class="buy" onclick="openModal('Базовый')">Подробнее и купить</button>
+    </article>
+    <article class="card">
+      <h2>Котость</h2><div class="price">345 ₽ / месяц</div>
+      <button class="buy" onclick="openModal('Котость')">Подробнее и купить</button>
+    </article>
+    <article class="card">
+      <h2>Мажор</h2><div class="price">450 ₽ / месяц</div>
+      <button class="buy" onclick="openModal('Мажор')">Подробнее и купить</button>
+    </article>
+    <article class="card">
+      <h2>Кариес</h2><div class="price">50 ₽ / навсегда</div>
+      <button class="buy" onclick="openModal('Кариес')">Подробнее и купить</button>
+    </article>
+  </section>
+</main>
+
+<footer>BlueMoon © 2026 • Донат-привилегии сервера</footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="window">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2 id="modalTitle"></h2>
+    <div class="modal-price" id="modalPrice"></div>
+    <h3>Привилегии</h3>
+    <ul id="privileges"></ul>
+    <div class="payment">
+      <b>Как оплатить</b>
+      <p>Для покупки напишите администратору в Telegram и укажите название выбранного доната.</p>
+      <a class="tg" href="https://t.me/nayrizzzscp" target="_blank">Написать в Telegram</a>
+      <div class="note">Telegram для оплаты: @nayrizzzscp</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const data={
+  "Базовый":{
+    price:"250 ₽ / месяц",
+    list:[
+      "Выдача предметов через панель админа",
+      "Смена роли (нельзя сменить с Д-класса на SCP)",
+      "Синий ник"
+    ]
+  },
+  "Котость":{
+    price:"345 ₽ / месяц",
+    list:[
+      "Выдача предметов",
+      "Смена роли (нельзя сменить с Д-класса на SCP)",
+      "Спавн отрядов",
+      "Кастомная расцветка ника"
+    ]
+  },
+  "Мажор":{
+    price:"450 ₽ / месяц",
+    list:[
+      "Абсолютно все привилегии других донатов",
+      "Смена роли на абсолютно любой класс, включая SCP"
+    ]
+  },
+  "Кариес":{
+    price:"50 ₽ / навсегда",
+    list:[
+      "Можно выдать любую конфету себе в начале раунда",
+      "Розовая конфета недоступна"
+    ]
+  }
+};
+function openModal(name){
+  document.getElementById("modalTitle").textContent=name;
+  document.getElementById("modalPrice").textContent=data[name].price;
+  document.getElementById("privileges").innerHTML=data[name].list.map(x=>"<li>"+x+"</li>").join("");
+  document.getElementById("modal").classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+</script>
+</body>
+</html>
